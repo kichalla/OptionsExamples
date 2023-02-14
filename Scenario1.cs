@@ -20,7 +20,7 @@ internal static class Scenario1
         while (true)
         {
             // Validation of options is done when resolving this service
-            var metricsOptions = serviceResolver.GetService<IOptionsMonitor<MetricsOptions>>().CurrentValue;
+            var metricsOptions = serviceResolver.GetRequiredService<IOptionsMonitor<MetricsOptions>>().CurrentValue;
             Console.WriteLine(metricsOptions.ApplicationVersion + ", " + metricsOptions.HostName);
             Thread.Sleep(TimeSpan.FromSeconds(1));
         }
@@ -51,14 +51,14 @@ internal static class Scenario1
         // inject configuration from DI
         public MetricsOptionsConfigurationManager(IConfiguration configuration)
         {
-            Console.WriteLine("ConfigureMetricsOptions constructor is called");
+            Console.WriteLine("MetricsOptionsConfigurationManager constructor is called");
 
             _appConfig = configuration;
         }
 
         public void Configure(MetricsOptions options)
         {
-            Console.WriteLine("ConfigureMetricsOptions.Configure method is called");
+            Console.WriteLine("MetricsOptionsConfigurationManager.Configure method is called");
 
             // Options author has the freedom to look within a particular section or beyond it
             // All of this is well and good as long as we adhere to a contract on the structure of
@@ -69,12 +69,12 @@ internal static class Scenario1
 
         public void PostConfigure(string name, MetricsOptions options)
         {
-            Console.WriteLine("ConfigureMetricsOptions.PostConfigure method is called");
+            Console.WriteLine("MetricsOptionsConfigurationManager.PostConfigure method is called");
         }
 
         public ValidateOptionsResult Validate(string name, MetricsOptions options)
         {
-            Console.WriteLine("ConfigureMetricsOptions.Validate method is called");
+            Console.WriteLine("MetricsOptionsConfigurationManager.Validate method is called");
 
             if (options.ApplicationVersion == "1.1")
             {

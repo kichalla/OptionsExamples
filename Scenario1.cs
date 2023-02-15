@@ -15,6 +15,10 @@ internal static class Scenario1
 
         var services = new ServiceCollection();
         services.AddMetricsServices(configuation);
+        services.Configure<MetricsOptions>(options =>
+        {
+            Console.WriteLine("Inside Configure<TOptions> lamda....");
+        });
         var serviceResolver = services.BuildServiceProvider();
 
         while (true)
